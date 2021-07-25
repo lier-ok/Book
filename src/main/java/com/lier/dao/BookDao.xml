@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lier.dao.BookDao">
+
+
+    <insert id="addBook">
+        insert into t_book(`name`, author, price, sales, stock ,img_path) values(#{name},#{author},#{price},#{sales},#{stock},#{imgPath})
+    </insert>
+
+    <update id="updateBook">
+        update t_book set
+        name = #{name},
+        author = #{author},
+        price = #{price},
+         sales = #{sales},
+         stock = #{stock},
+         img_path = #{imgPath}
+         where id = #{id}
+
+    </update>
+
+    <delete id="deleteBookById">
+        delete from t_book where id = #{id}
+    </delete>
+    <select id="queryBookById" resultType="com.lier.pojo.Book">
+        select `id` , `name` , `author` , `price` , `sales` , `stock` , `img_path` imgPath
+        from t_book
+        where id = #{id}
+    </select>
+    <select id="queryBooks" resultType="com.lier.pojo.Book">
+        select `id` , `name` , `author` , `price` , `sales` , `stock` , `img_path` imgPath
+        from t_book
+    </select>
+    <select id="queryForPageTotalCount" resultType="java.lang.Integer">
+        select count(*) from t_book
+    </select>
+    <select id="queryForPageItems" resultType="com.lier.pojo.Book">
+        select `id` , `name` , `author` , `price` , `sales` , `stock` , `img_path` as imgPath
+        from t_book
+        limit #{begin},#{pageSize}
+    </select>
+    <select id="queryForPageTotalCountByPrice" resultType="java.lang.Integer">
+        select count(*) from t_book
+        where price between #{min} and #{max}
+    </select>
+    <select id="queryForPageItemsByPrice" resultType="com.lier.pojo.Book">
+        select `id` , `name` , `author` , `price` , `sales` , `stock` , `img_path` imgPath
+        from t_book
+        where price between #{min} and #{max}
+        limit #{begin},#{pageSize}
+    </select>
+
+
+
+
+</mapper>
